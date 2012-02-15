@@ -1,0 +1,11 @@
+syntax: glob
+
+.build
+.dist
+nbproject
+review
+tmp
+vendor
+.#*
+#*
+TAGS

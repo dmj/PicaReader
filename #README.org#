@@ -1,0 +1,117 @@
+#+TITLE: PicaReader -- Classes for reading Pica+ records
+#+AUTHOR: David Maus
+#+EMAIL: maus@hab.de
+
+* About
+
+PicaReader provides classes for reading Pica+ records encoded in PicaXML and PicaPlain.
+
+PicaReader is copyright (c) 2012 by Herzog August Bibliothek Wolfenbüttel and released under the
+terms of the GNU General Public License v3.
+
+* Installation
+
+PicaReader should be installed using the [[http://pear.php.net][PEAR Installer]]. This installer is the PHP community's
+de-facto standard for installing PHP packages.
+
+#+BEGIN_EXAMPLE
+pear channel-discover hab20.hab.de/service/pear
+pear install --alldeps hab20.hab.de/service/pear/PicaReader
+#+END_EXAMPLE
+
+* Usage
+
+All readers adhere to the same interface. You open the reader with a string of input data by calling
+=Reader::open()= and can call =Reader::read()= to read the next record in the input data. If the
+input does not contain (anymore) records =Reader::read()= returns =FALSE=. Otherwise it returns
+either a record object created with PicaRecord's =Record::factory()= function.
+
+#+BEGIN_SRC php
+  $reader = new \HAB\Pica\Reader\PicaXmlReader()
+  $record = $reader->read(file_get_contents('http://unapi.gbv.de?id=opac-de-23:ppn:635012286&format=picaxml'));
+  $reader->close();
+#+END_SRC
+
+To filter out records or fields you can attach a filter to the reader via =Reader::setFilter()=. A
+filter is any valid PHP callback that takes an associative array representing the record as argument
+and returns a possibly modified array or =FALSE= if the entire record should be skipped.
+
+The array representation of a record is defined as follows:
+
+#+BEGIN_EXAMPLE
+RECORD   := array('fields' => array(FIELD, …))
+FIELD    := array('tag' => TAG, 'occurrence' => OCCURRENCE, 'subfields' => array(SUBFIELD, …))
+SUBFIELD := array('code' => CODE, 'value' => VALUE)
+#+END_EXAMPLE
+
+Where =TAG=, =OCCURRENCE=, =CODE=, and =VALUE= are the respective properties of a Pica+ field or
+subfield.
+
+For example, if your source delivers malformed PicaXML records like so:
+
+#+BEGIN_SRC xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  <record xmlns="info:srw/schema/5/picaXML-v1.0">
+    <datafield tag="">
+    </datafield>
+    <datafield tag="001A">
+      <subfield code="0">0001:14-09-10</subfield>
+    </datafield>
+    …
+  </record>
+#+END_SRC
+
+You can attach a filter function to remove these fields with an invalid tag:
+
+#+BEGIN_SRC php
+  $reader = new PicaXmlReader();
+  $reader->setFilter(function (array $r) { 
+      return array('fields' => array_filter($r['fields'],
+                                            function (array $f) {
+                                              return isset($f['tag']) && \HAB\Pica\Record\Field::isValidFieldTag($f['tag']);
+                                            }));
+    });
+  $record = $reader->read(…);
+  $reader->close();
+#+END_SRC
+
+* Development
+
+If you want to patch or enhance this component, you will need to create a suitable development
+environment. The easiest way to do that is to install phix4componentdev:
+
+#+BEGIN_EXAMPLE
+apt-get install php5-xdebug
+apt-get install php5-imagick
+pear channel-discover pear.phix-project.org
+pear -D auto_discover=1 install -Ba phix/phix4componentdev
+#+END_EXAMPLE
+
+You can then clone the Git repository:
+
+#+BEGIN_EXAMPLE
+git clone git://gitorious.org/php-pica/picareader.git
+#+END_EXAMPLE
+
+Then, install a local copy of the package's dependencies to complete the development environment:
+
+#+BEGIN_EXAMPLE
+phing build-vender
+#+END_EXAMPLE
+
+To make life easier for you, common tasks (such as running unit tests, generating code review
+analytics, and creating the PEAR package) have been automated using [[http://phing.info][Phing]]. You'll find the
+automated steps inside the build.xml file that ships with the component.
+
+Run the command 'phing' in the component's top-level folder to see the full list of available
+automated tasks.
+
+* Acknowledgements
+
+The [[http://phix-project.org][Phix project]] makes it easy to setup and maintain a package repository for a PEAR-installable
+package and integrates important tools such as [[http://phpunit.de][PHPUnit]], [[http://phing.info][Phing]], [[http://pear.php.net][PEAR]], and [[http://pirum.sensiolabs.org/][Pirum]]. Large parts of this
+package would not have been possible without studying the source of [[http://search.cpan.org/dist/PICA-Record/][Pica::Record]], an open source
+Perl library for handling Pica+ records by Jakob Voß, and the practical knowledge of our library's
+catalogers.
+
+* Footnotes
