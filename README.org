@@ -108,6 +108,10 @@ automated tasks.
 
 * Acknowledgements
 
-…
+The [[http://phix-project.org][Phix project]] makes it easy to setup and maintain a package repository for a PEAR-installable
+package and integrates important tools such as [[http://phpunit.de][PHPUnit]], [[http://phing.info][Phing]], [[http://pear.php.net][PEAR]], and [[http://pirum.sensiolabs.org/][Pirum]]. Large parts of this
+package would not have been possible without studying the source of [[http://search.cpan.org/dist/PICA-Record/][Pica::Record]], an open source
+Perl library for handling Pica+ records by Jakob Voß, and the practical knowledge of our library's
+catalogers.
 
 * Footnotes
