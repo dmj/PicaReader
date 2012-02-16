@@ -96,7 +96,7 @@ git clone git://gitorious.org/php-pica/picareader.git
 Then, install a local copy of the package's dependencies to complete the development environment:
 
 #+BEGIN_EXAMPLE
-phing build-vender
+phing build-vendor
 #+END_EXAMPLE
 
 To make life easier for you, common tasks (such as running unit tests, generating code review
