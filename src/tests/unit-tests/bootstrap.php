@@ -34,3 +34,6 @@ if (class_exists('Phix_Project\ContractLib\Contract'))
 
 // step 5: define a constant with the fixture directory
 define('APP_FIXTUREDIR', realpath(__DIR__ . '/../fixtures'));
+
+// step 6: Set error level to include E_STRICT
+\error_reporting(\E_ALL | \E_STRICT);

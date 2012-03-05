@@ -48,32 +48,32 @@ class PicaPlainReaderTest extends \PHPUnit_FrameWork_TestCase {
   public function testReadDoubleEncodedDollarSign () {
     $this->_reader->open('002@/00 $0T$adouble$$dollar');
     $record = $this->_reader->read();
-    $field = reset($record->getFields('002@/00'));
-    $subfield = reset($field->getSubfields('a'));
+    $field = $record->getFirstMatchingField('002@/00');
+    $subfield = $field->getNthSubfield('a', 0);
     $this->assertEquals('double$dollar', $subfield->getValue());
   }
 
   public function testReadDoubleEncodedDoubleDollarSign2x () {
     $this->_reader->open('002@/00 $0T$adouble$$$$dollar');
     $record = $this->_reader->read();
-    $field = reset($record->getFields('002@/00'));
-    $subfield = reset($field->getSubfields('a'));
+    $field = $record->getFirstMatchingField('002@/00');
+    $subfield = $field->getNthSubfield('a', 0);
     $this->assertEquals('double$$dollar', $subfield->getValue());
   }
 
   public function testReadDoubleEncodedDoubleDollarSignAtEnd () {
     $this->_reader->open('002@/00 $0T$adoubledollar$$');
     $record = $this->_reader->read();
-    $field = reset($record->getFields('002@/00'));
-    $subfield = reset($field->getSubfields('a'));
+    $field = $record->getFirstMatchingField('002@/00');
+    $subfield = $field->getNthSubfield('a', 0);
     $this->assertEquals('doubledollar$', $subfield->getValue());
   }
 
   public function testReadDoubleEncodedDoubleDollarSignOnly () {
     $this->_reader->open('002@/00 $0T$a$$');
     $record = $this->_reader->read();
-    $field = reset($record->getFields('002@/00'));
-    $subfield = reset($field->getSubfields('a'));
+    $field = $record->getFirstMatchingField('002@/00');
+    $subfield = $field->getNthSubfield('a', 0);
     $this->assertEquals('$', $subfield->getValue());
   }
 
