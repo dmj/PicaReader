@@ -6,6 +6,6 @@ nbproject
 review
 tmp
 vendor
-.#*
-#*
+\#*#
+.#*#
 TAGS
