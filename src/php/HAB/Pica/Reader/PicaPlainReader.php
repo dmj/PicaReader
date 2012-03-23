@@ -26,6 +26,8 @@
 
 namespace HAB\Pica\Reader;
 
+use HAB\Pica\Parser\PicaPlainParser;
+
 /**
  * Reader for Pica+ records encoded in PicaPlain.
  *
@@ -67,81 +69,11 @@ class PicaPlainReader extends Reader {
       $record = array('fields' => array());
       do {
         $line = current($this->_data);
-        $record['fields'] []= $this->readField($line);
+        $record['fields'] []= PicaPlainParser::parseField($line);
       } while (next($this->_data));
       next($this->_data);
     }
     return $record;
-  }
-
-  /**
-   * Return array representation of the field encoded in a line.
-   *
-   * @throws \RuntimeException Invalid characters in line
-   * @param  string $line PicaPlain record line
-   * @return array Array representation of the encoded field
-   */
-  protected function readField ($line) {
-    $field = array('subfields' => array());
-    $match = array();
-    if (preg_match('#^([012][0-9]{2}[A-Z@])(/([0-9]{2}))? (\$.*)$#Du', $line, $match)) {
-      $field = array('tag' => $match[1],
-                     'occurrence' => $match[3] ?: null,
-                     'subfields' => $this->parseSubfields($match[4]));;
-    } else {
-      throw new \RuntimeException("Invalid characters in PicaPlain record near line {$this->getCurrentLineNumber()}");
-    }
-    return $field;
-  }
-
-  /**
-   * Return array of array representations of the subfields encode in argument.
-   *
-   * @param  string $str Encoded subfields
-   * @return array Array representions of the encoded subfields
-   */
-  protected function parseSubfields ($str) {
-    $subfields = array();
-    $subfield = null;
-    $pos = 0;
-    $max = strlen($str);
-    $state = '$';
-    do {
-      switch ($state) {
-        case '$':
-          if (is_array($subfield)) {
-            $subfields []= $subfield;
-            $subfield = array();
-          }
-          $pos += 1;
-          $state = 'code';
-          break;
-        case 'code':
-          $subfield['code'] = $str[$pos];
-          $subfield['value'] = '';
-          $pos += 1;
-          $state = 'value';
-          break;
-        case 'value':
-          $next = strpos($str, '$', $pos);
-          if ($next === false) {
-            $subfield['value'] .= substr($str, $pos);
-            $pos = $max;
-          } else {
-            $subfield['value'] .= substr($str, $pos, ($next - $pos));
-            $pos = $next;
-            if (isset($str[$pos + 1]) && $str[$pos + 1] === '$') {
-              $subfield['value'] .= '$';
-              $pos += 2;
-            } else {
-              $state = '$';
-            }
-          }
-          break;
-      }
-    } while ($pos < $max);
-    $subfields []= $subfield;
-    return $subfields;
   }
 
   /**
