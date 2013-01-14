@@ -17,7 +17,7 @@
         { "type": "vcs", "url": "http://github.com/dmj/PicaRecord"}
     ],
     "require": {
-        "hab/picarecord": "dev-next"
+        "hab/picarecord": "dev-next@dev"
     },
     "autoload": {
         "psr-0": {
