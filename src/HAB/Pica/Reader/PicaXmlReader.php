@@ -53,18 +53,17 @@ class PicaXmlReader extends Reader
     }
 
     /**
-     * Prepare the reader for reading data.
+     * Open the reader with input stream.
      *
-     * @param  string|resource $input
+     * @param  resource|string $stream
      * @return void
      */
-    public function open ($input)
+    public function open ($stream)
     {
-        if (is_resource($input)) {
-            $input = stream_get_contents($input);
+        if (is_resource($stream)) {
+            $stream = stream_get_contents($stream);
         }
-        $this->_xmlReader->XML($input);
-        parent::open($input);
+        $this->_xmlReader->xml($stream);
     }
 
     /**
@@ -75,7 +74,6 @@ class PicaXmlReader extends Reader
     public function close ()
     {
         $this->_xmlReader->close();
-        parent::close();
     }
 
     /**

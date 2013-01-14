@@ -38,15 +38,15 @@ class PicaPlainReader extends Reader
      */
     protected $_data;
 
+
     /**
-     * Open the reader with input data.
+     * Open the reader with input stream.
      *
-     * @param  string $data Input data
+     * @param  resource|string $stream
      * @return void
      */
     public function open ($data)
     {
-        parent::open($data);
         $this->_data = preg_split("/(?:\n\r|[\n\r])/", $data);
     }
 
@@ -68,13 +68,12 @@ class PicaPlainReader extends Reader
     }
 
     /**
-     * Close the reader.
+     * Close reader.
      *
      * @return void
      */
     public function close ()
     {
-        parent::close();
         $this->_data = null;
     }
 }

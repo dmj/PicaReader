@@ -59,17 +59,19 @@ abstract class Reader
     {}
 
     /**
-     * Open the reader with input data.
+     * Open the reader with input stream.
+     *
+     * @param  resource|string $stream
+     * @return void
+     */
+    abstract public function open ($stream);
+
+    /**
+     * Close reader.
      *
      * @return void
      */
-    public function open ($data)
-    {
-        if ($this->isOpen()) {
-            $this->close();
-        }
-        $this->_isOpen = true;
-    }
+    abstract public function close ();
 
     /**
      * Return next record in input data or FALSE if no more records.
@@ -132,16 +134,6 @@ abstract class Reader
     public function unsetFilter ()
     {
         $this->_filter = null;
-    }
-
-    /**
-     * Close the reader.
-     *
-     * @return void
-     */
-    public function close ()
-    {
-        $this->_isOpen = false;
     }
 
     /**
