@@ -27,6 +27,7 @@
 
 namespace HAB\Pica\Reader;
 
+use RuntimeException;
 use InvalidArgumentException;
 
 class PicaNormReader extends Reader
