@@ -140,6 +140,10 @@ class PicaNormReader extends Reader
                 $record['fields'] []= $field;
             }
         }
+        if (!$this->feof()) {
+            // Swallow record separator
+            $this->getc();
+        }
         return empty($record) ? false : $record;
     }
 
