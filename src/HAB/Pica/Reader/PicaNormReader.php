@@ -109,6 +109,10 @@ class PicaNormReader extends Reader
         $this->stream         = $stream;
         $this->bufferSize     = 0;
         $this->bufferPosition = 0;
+        // Skip over preceeding whitespace
+        while (!ctype_alnum($this->getc(true))) {
+            $this->getc();
+        }
     }
 
     /**
