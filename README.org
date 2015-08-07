@@ -11,7 +11,7 @@ terms of the GNU General Public License v3.
 
 * Installation
 
-You can install PicaRecord via Composer.
+You can install PicaReader via Composer.
 
 #+BEGIN_EXAMPLE
 composer require hab/picareader
