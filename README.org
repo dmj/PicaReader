@@ -11,12 +11,10 @@ terms of the GNU General Public License v3.
 
 * Installation
 
-PicaReader should be installed using the [[http://pear.php.net][PEAR Installer]]. This installer is the PHP community's
-de-facto standard for installing PHP packages.
+You can install PicaRecord via Composer.
 
 #+BEGIN_EXAMPLE
-pear channel-discover hab20.hab.de/service/pear
-pear install --alldeps hab20.hab.de/service/pear/PicaReader
+composer require hab/picareader
 #+END_EXAMPLE
 
 * Usage
@@ -75,43 +73,10 @@ You can attach a filter function to remove these fields with an invalid tag:
   $reader->close();
 #+END_SRC
 
-* Development
-
-If you want to patch or enhance this component, you will need to create a suitable development
-environment. The easiest way to do that is to install phix4componentdev:
-
-#+BEGIN_EXAMPLE
-apt-get install php5-xdebug
-apt-get install php5-imagick
-pear channel-discover pear.phix-project.org
-pear -D auto_discover=1 install -Ba phix/phix4componentdev
-#+END_EXAMPLE
-
-You can then clone the Git repository:
-
-#+BEGIN_EXAMPLE
-git clone git://gitorious.org/php-pica/picareader.git
-#+END_EXAMPLE
-
-Then, install a local copy of the package's dependencies to complete the development environment:
-
-#+BEGIN_EXAMPLE
-phing build-vendor
-#+END_EXAMPLE
-
-To make life easier for you, common tasks (such as running unit tests, generating code review
-analytics, and creating the PEAR package) have been automated using [[http://phing.info][Phing]]. You'll find the
-automated steps inside the build.xml file that ships with the component.
-
-Run the command 'phing' in the component's top-level folder to see the full list of available
-automated tasks.
-
 * Acknowledgements
 
-The [[http://phix-project.org][Phix project]] makes it easy to setup and maintain a package repository for a PEAR-installable
-package and integrates important tools such as [[http://phpunit.de][PHPUnit]], [[http://phing.info][Phing]], [[http://pear.php.net][PEAR]], and [[http://pirum.sensiolabs.org/][Pirum]]. Large parts of this
-package would not have been possible without studying the source of [[http://search.cpan.org/dist/PICA-Record/][Pica::Record]], an open source
-Perl library for handling Pica+ records by Jakob Voß, and the practical knowledge of our library's
-catalogers.
+Large parts of this package would not have been possible without studying the source of
+[[http://search.cpan.org/dist/PICA-Record/][Pica::Record]], an open source Perl library for handling Pica+ records by Jakob Voß, and the practical
+knowledge of our library's catalogers.
 
 * Footnotes
