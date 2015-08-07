@@ -13,11 +13,8 @@
     "support": {
 	"email": "maus@hab.de"
     },
-    "repositories": [
-        { "type": "vcs", "url": "http://github.com/dmj/PicaRecord"}
-    ],
     "require": {
-        "hab/picarecord": "dev-next@dev"
+        "hab/picarecord": "~1.0"
     },
     "autoload": {
         "psr-0": {
