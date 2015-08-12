@@ -26,7 +26,8 @@ either a record object created with PicaRecord's =Record::factory()= function.
 
 #+BEGIN_SRC php
   $reader = new \HAB\Pica\Reader\PicaXmlReader()
-  $record = $reader->read(file_get_contents('http://unapi.gbv.de?id=opac-de-23:ppn:635012286&format=picaxml'));
+  $reader->open(file_get_contents('http://unapi.gbv.de?id=opac-de-23:ppn:635012286&format=picaxml'));
+  $record = $reader->read();
   $reader->close();
 #+END_SRC
 
