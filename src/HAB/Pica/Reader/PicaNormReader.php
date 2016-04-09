@@ -230,6 +230,9 @@ class PicaNormReader extends Reader
             if ($buffer === false) {
                 throw new RuntimeException('Error reading input stream');
             }
+            if (strlen($buffer) === 0) {
+                return null;
+            }
             $this->bufferPosition = 0;
             $this->bufferSize = strlen($buffer);
             $this->buffer = $buffer;
