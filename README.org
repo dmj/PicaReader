@@ -6,7 +6,7 @@
 
 PicaReader provides classes for reading Pica+ records encoded in PicaXML and PicaPlain.
 
-PicaReader is copyright (c) 2012 by Herzog August Bibliothek Wolfenbüttel and released under the
+PicaReader is copyright (c) 2012-2016 by Herzog August Bibliothek Wolfenbüttel and released under the
 terms of the GNU General Public License v3.
 
 * Installation
