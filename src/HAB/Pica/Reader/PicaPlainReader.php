@@ -26,6 +26,7 @@
 
 namespace HAB\Pica\Reader;
 
+use HAB\Pica\Parser\PicaPlainParserInterface;
 use HAB\Pica\Parser\PicaPlainParser;
 
 class PicaPlainReader extends Reader
@@ -38,6 +39,23 @@ class PicaPlainReader extends Reader
      */
     protected $_data;
 
+    /**
+     * Parser instance.
+     *
+     * @var PicaPlainParser
+     */
+    private $_parser;
+
+    /**
+     * Constructor.
+     *
+     * @param  PicaPlainParserInterface $parser Optional parser instance
+     * @return void
+     */
+    public function __construct (PicaPlainParserInterface $parser = null)
+    {
+        $this->_parser = $parser ?: new PicaPlainParser();
+    }
 
     /**
      * Open the reader with input stream.
@@ -60,7 +78,7 @@ class PicaPlainReader extends Reader
             $record = array('fields' => array());
             do {
                 $line = current($this->_data);
-                $record['fields'] []= PicaPlainParser::parseField($line);
+                $record['fields'] []= $this->_parser->parseField($line);
             } while (next($this->_data));
             next($this->_data);
         }

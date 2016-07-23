@@ -28,38 +28,27 @@ namespace HAB\Pica\Parser;
 
 use RuntimeException;
 
-class PicaPlainParser
+class PicaPlainParser implements PicaPlainParserInterface
 {
 
     /**
-     * Return array representation of the field encoded in a line.
-     *
-     * @throws RuntimeException Invalid characters in line
-     *
-     * @param  string $line PicaPlain record line
-     * @return array
+     * {@inheritDoc}
      */
-    public static function parseField ($line) 
+    public function parseField ($line) 
     {
         $field = array('subfields' => array());
         $match = array();
         if (preg_match('#^([012][0-9]{2}[A-Z@])(/([0-9]{2}))? (\$.*)$#Du', $line, $match)) {
             $field = array('tag' => $match[1],
                            'occurrence' => $match[3] ?: null,
-                           'subfields' => self::parseSubfields($match[4]));;
+                           'subfields' => $this->parseSubfields($match[4]));;
         } else {
             throw new RuntimeException("Invalid characters in PicaPlain record at line: {$line}");
         }
         return $field;
     }
 
-    /**
-     * Return array of array representations of the subfields encode in argument.
-     *
-     * @param  string $str Encoded subfields
-     * @return array
-     */
-    public static function parseSubfields ($str) 
+    public function parseSubfields ($str) 
     {
         $subfields = array();
         $subfield = null;
