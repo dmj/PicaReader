@@ -20,7 +20,7 @@
  *
  * @package   PicaReader
  * @author    David Maus <maus@hab.de>
- * @copyright Copyright (c) 2012, 2013 by Herzog August Bibliothek Wolfenbüttel
+ * @copyright Copyright (c) 2012 - 2016 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License v3
  */
 
