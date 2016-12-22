@@ -78,7 +78,10 @@ class PicaPlainReader extends Reader
             $record = array('fields' => array());
             do {
                 $line = current($this->_data);
-                $record['fields'] []= $this->_parser->parseField($line);
+                $field = $this->_parser->parseField($line);
+                if ($field !== false) {
+                    $record['fields'] []= $field;
+                }
             } while (next($this->_data));
             next($this->_data);
         }
