@@ -20,7 +20,7 @@
  *
  * @package   PicaReader
  * @author    David Maus <maus@hab.de>
- * @copyright Copyright (c) 2012 - 2016 by Herzog August Bibliothek Wolfenbüttel
+ * @copyright Copyright (c) 2012 - 2017 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License v3
  */
 
@@ -31,6 +31,13 @@ use HAB\Pica\Parser\PicaPlainParser;
 
 class PicaPlainReader extends Reader
 {
+
+    /**
+     * Regular expression matching lines that should be ignore.
+     *
+     * @var string
+     */
+    public $ignoreLineRegexp = '/^$/';
 
     /**
      * Current input data.
@@ -78,7 +85,9 @@ class PicaPlainReader extends Reader
             $record = array('fields' => array());
             do {
                 $line = current($this->_data);
-                $record['fields'] []= $this->_parser->parseField($line);
+                if (!preg_match($this->ignoreLineRegexp, $line)) {
+                    $record['fields'] []= $this->_parser->parseField($line);
+                }
             } while (next($this->_data));
             next($this->_data);
         }

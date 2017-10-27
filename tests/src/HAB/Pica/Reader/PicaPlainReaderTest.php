@@ -105,6 +105,13 @@ class PicaPlainReaderTest extends PHPUnit_FrameWork_TestCase
         $this->_reader->unsetFilter();
     }
 
+    public function testReadIgnoreLines ()
+    {
+        $this->_reader->open("002@/00 \$0T\nfoo: foobar");
+        $this->_reader->ignoreLineRegexp = '/^[a-z]+:/';
+        $this->_reader->read();
+    }
+
     ///
 
     /**
