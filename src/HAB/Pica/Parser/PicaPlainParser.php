@@ -20,7 +20,7 @@
  *
  * @package   PicaReader
  * @author    David Maus <maus@hab.de>
- * @copyright Copyright (c) 2012 - 2016 by Herzog August Bibliothek Wolfenbüttel
+ * @copyright Copyright (c) 2012 - 2017 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License v3
  */
 
@@ -38,7 +38,7 @@ class PicaPlainParser implements PicaPlainParserInterface
     {
         $field = array('subfields' => array());
         $match = array();
-        if (preg_match('#^([012][0-9]{2}[A-Z@])(/([0-9]{2}))? (\$.*)$#Du', $line, $match)) {
+        if (preg_match('#^([012][0-9]{2}[A-Z@])(/([0-9]{2}))?\s+(\$.*)$#Du', $line, $match)) {
             $field = array('tag' => $match[1],
                            'occurrence' => $match[3] ?: null,
                            'subfields' => $this->parseSubfields($match[4]));;
