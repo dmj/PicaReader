@@ -2,6 +2,8 @@
 #+AUTHOR: David Maus
 #+EMAIL: maus@hab.de
 
+[![Build Status](https://travis-ci.org/dmj/PicaReader.svg?branch=master)](https://travis-ci.org/dmj/PicaReader)
+
 * About
 
 PicaReader provides classes for reading Pica+ records encoded in PicaXML and PicaPlain.
